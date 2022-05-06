@@ -6,13 +6,14 @@ import (
 
 	"example.com/hello-gin/pkg/setting"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 var db *gorm.DB
 
 type Model struct {
 	ID         int `gorm:"primary_key" json:"id"`
-	CreateOn   int `json:"created_on"`
+	CreatedOn  int `json:"created_on"`
 	ModifiedOn int `json:"modified_on"`
 }
 
@@ -54,5 +55,10 @@ func init() {
 }
 
 func CloseDB() {
-	defer db.Close()
+	defer func(db *gorm.DB) {
+		err := db.Close()
+		if err != nil {
+
+		}
+	}(db)
 }
